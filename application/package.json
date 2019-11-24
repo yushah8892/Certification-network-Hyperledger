@@ -2,7 +2,7 @@
 	"name": "nodejs",
 	"version": "1.0.0",
 	"description": "",
-	"main": "1_addToWallet.js",
+	"main": "apiserver.js",
 	"scripts": {
 		"test": "rm -rf identity && node 1_addToWallet.js && node 2_createUser.js"
 	},
@@ -12,7 +12,8 @@
 	"dependencies": {
 		"fabric-network": "~1.4.4",
 		"fabric-client": "~1.4.4",
-		"js-yaml": "^3.12.0"
+		"js-yaml": "^3.12.0",
+		"express": "4.17.1"
 	},
 	"devDependencies": {
 		"eslint": "^5.6.0"

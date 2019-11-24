@@ -138,8 +138,8 @@ function networkUp() {
   fi
   # Wait for 10 seconds to allow the docker network to stabilise
   sleep 1
-  echo "Sleeping 10s to allow cluster to complete booting"
-  sleep 9
+  echo "Sleeping 50s to allow cluster to complete booting"
+  sleep 50
 
   # now run the bootstrap script
   docker exec cli scripts/bootstrap.sh "$CHANNEL_NAME" "$CLI_DELAY" "$LANGUAGE" "$CLI_TIMEOUT" "$VERBOSE"
@@ -182,7 +182,7 @@ function networkDown() {
     #Cleanup images
     removeUnwantedImages
     # remove orderer block and other channel configuration transactions and certs
-    rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
+    #rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
   fi
 }
 

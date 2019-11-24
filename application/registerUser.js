@@ -46,18 +46,18 @@ async function main() {
         const ca = gateway.getClient().getCertificateAuthority();
         const adminIdentity = gateway.getCurrentIdentity();
         // Register the user, enroll the user, and import the new identity into the wallet.
-        const secret = await ca.register({ affiliation: 'org1.department1', enrollmentID: 'user1@iit.certification-network.com', role: 'client' }, adminIdentity);
-        console.log('Successfully registered user ' + user + ' and the secret is ' + secret);
+        const secret = await ca.register({ affiliation: 'org1.department1', enrollmentID: 'user1@iit.certification-network.com',enrollmentSecret:'user1@iit', role: 'client' }, adminIdentity);
+        console.log('Successfully registered user '  + ' and the secret is ' + secret);
 
         // Enroll the admin user, and import the new identity into the wallet.
-        const enrollment = await ca.enroll({ enrollmentID: user, enrollmentSecret: secret });
+        const enrollment = await ca.enroll({ enrollmentID: "user1@iit.certification-network.com", enrollmentSecret: secret });
         const identity = X509WalletMixin.createIdentity('iitMSP', enrollment.certificate, enrollment.key.toBytes());
-        await wallet.import(user, identity);
-        console.log(`Successfully enrolled user ${user} and imported it into the wallet`);
+        await wallet.import('user1@iit.certification-network.com', identity);
+        console.log(`Successfully enrolled user and imported it into the wallet`);
 
 
     } catch (error) {
-        console.error(`Failed to register user ${user}: ${error}`);
+        console.error(`Failed to register user: ${error}`);
         process.exit(1);
     }
 }

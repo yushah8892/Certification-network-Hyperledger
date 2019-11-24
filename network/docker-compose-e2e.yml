@@ -19,12 +19,12 @@ services:
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.iit.certification-network.com
-      - FABRIC_CA_SERVER_TLS_ENABLED=false
-      # - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.iit.certification-network.com-cert.pem
-      # - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/494294769474421232f6f1caf457d38540c7c38247e1e27f2e008435c6dca464_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.iit.certification-network.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/3d7ff1823829422b00e48c0f96861b5a175f4792c863295eac081440e28ff568_sk
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d' # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.iit.certification-network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/494294769474421232f6f1caf457d38540c7c38247e1e27f2e008435c6dca464_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.iit.certification-network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3d7ff1823829422b00e48c0f96861b5a175f4792c863295eac081440e28ff568_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/iit.certification-network.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.iit.certification-network.com
@@ -36,12 +36,12 @@ services:
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.mhrd.certification-network.com
-      - FABRIC_CA_SERVER_TLS_ENABLED=false
-      # - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.mhrd.certification-network.com-cert.pem
-      # - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/2c1fece7455ee6be535b7a3c60e6371362e68fd05b2a534034d533140f2ab8d8_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.mhrd.certification-network.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/29ef49caed93689b9ae6b381c0544723f64cf43be20ebc5a3f52ce0108f10627_sk
     ports:
       - "8054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d' # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.mhrd.certification-network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/2c1fece7455ee6be535b7a3c60e6371362e68fd05b2a534034d533140f2ab8d8_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.mhrd.certification-network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/29ef49caed93689b9ae6b381c0544723f64cf43be20ebc5a3f52ce0108f10627_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/mhrd.certification-network.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.mhrd.certification-network.com
@@ -53,12 +53,12 @@ services:
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.microsoft.certification-network.com
-      - FABRIC_CA_SERVER_TLS_ENABLED=false
-      # - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.microsoft.certification-network.com-cert.pem
-      # - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/UPGRAD_CA_PRIVATE_KEY
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.microsoft.certification-network.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/709466c15675bf3ed2f64a64c2bbba395b42a80a617edf13f89d8c7f897ccf54_sk
     ports:
       - "9054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d' # --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.microsoft.certification-network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/UPGRAD_CA_PRIVATE_KEY -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.microsoft.certification-network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/709466c15675bf3ed2f64a64c2bbba395b42a80a617edf13f89d8c7f897ccf54_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/microsoft.certification-network.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.microsoft.certification-network.com
@@ -267,7 +267,7 @@ services:
       - CORE_PEER_ID=cli
       - CORE_PEER_ADDRESS=peer0.iit.certification-network.com:7051
       - CORE_PEER_LOCALMSPID=iitMSP
-      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/iit.certification-network.com/peers/peer0.iit.certification-network.com/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/iit.certification-network.com/peers/peer0.iit.certification-network.com/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/iit.certification-network.com/peers/peer0.iit.certification-network.com/tls/ca.crt
@@ -306,7 +306,7 @@ services:
       - CORE_PEER_ID=chaincode
       - CORE_PEER_ADDRESS=peer0.iit.certification-network.com:7051
       - CORE_PEER_LOCALMSPID=iitMSP
-      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/crypto/peerOrganizations/iit.certification-network.com/users/Admin@iit.certification-network.com/msp
       - CORE_TLS_CLIENT_KEY_PATH=/opt/gopath/src/crypto/peerOrganizations/iit.certification-network.com/users/Admin@iit.certification-network.com/tls/client.key
       - CORE_TLS_CLIENT_CERT_PATH=/opt/gopath/src/crypto/peerOrganizations/iit.certification-network.com/users/Admin@iit.certification-network.com/tls/client.crt

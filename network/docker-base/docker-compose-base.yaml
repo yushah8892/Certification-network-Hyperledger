@@ -14,7 +14,7 @@ services:
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
       # enabled TLS
-      - ORDERER_GENERAL_TLS_ENABLED=false
+      - ORDERER_GENERAL_TLS_ENABLED=true
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
       - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
@@ -43,6 +43,8 @@ services:
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.iit.certification-network.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.iit.certification-network.com:7051
       - CORE_PEER_LOCALMSPID=iitMSP
+      - FABRIC_LOGGING_SPEC=DEBUG
+
     volumes:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/iit.certification-network.com/peers/peer0.iit.certification-network.com/msp:/etc/hyperledger/fabric/msp

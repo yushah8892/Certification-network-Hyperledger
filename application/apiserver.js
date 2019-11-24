@@ -1,16 +1,32 @@
-import routes from './routes/index';
-
+const routes = require('./routes/index');
+const  SETTING = require('../setting');
 const  express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 8000;
+const port = normalizedPort(process.env.PORT || '8000')
+app.set('port',port);
+app.use(express.json());
 app.use('/', routes);
-app.use(bodyParser.json());
+
+//app.use(bodyParser.urlencoded({ extended: true }));
+
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
 
 
+function normalizedPort(val){
+
+    var port = parseInt(val,10);
+    if(isNaN(port)){
+        return val;
+    }
+    if(port >= 0){
+        return port;
+    }
+    return false;
+
+}
 
 
 /*
@@ -98,4 +114,4 @@ app.put('/api/changeowner/:car_index', async function (req, res) {
     }	
 })  
 */
-export default app;
+module.exports = app;

@@ -33,6 +33,7 @@ setGlobals() {
   ORG=$2
   if [ "$ORG" == 'iit' ]; then
     CORE_PEER_LOCALMSPID="iitMSP"
+    CORE_PEER_TLS_ENABLED="true"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_IIT_CA
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/iit.certification-network.com/users/Admin@iit.certification-network.com/msp
     if [ "$PEER" -eq 0 ]; then
@@ -42,6 +43,7 @@ setGlobals() {
     fi
   elif [ "$ORG" == 'mhrd' ]; then
     CORE_PEER_LOCALMSPID="mhrdMSP"
+    CORE_PEER_TLS_ENABLED="true"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MHRD_CA
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/mhrd.certification-network.com/users/Admin@mhrd.certification-network.com/msp
     if [ "$PEER" -eq 0 ]; then
@@ -52,6 +54,7 @@ setGlobals() {
 
   elif [ "$ORG" == 'microsoft' ]; then
     CORE_PEER_LOCALMSPID="microsoftMSP"
+    CORE_PEER_TLS_ENABLED="true"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MICROSOFT_CA
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/microsoft.certification-network.com/users/Admin@microsoft.certification-network.com/msp
     if [ "$PEER" -eq 0 ]; then
