@@ -54,15 +54,6 @@ class StudentController {
             // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
             // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
 
-            try{
-                const studentBuff = await contract.evaluateTransaction('getStudent', studentId);
-
-            }catch(error){
-                console.error(`Failed to evaluate transaction: ${error}`);
-                res.status(500).json({ error: error });
-                process.exit(1);
-            }
-
 
             const result = await contract.submitTransaction('createStudent', studentId, name, email);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
@@ -79,7 +70,7 @@ class StudentController {
     static async getStudent(req, res) {
 
         try {
-            const network = this.getNetwork();
+            const network = await this.getNetwork();
             // Get the contract from the network.
             const contract = network.getContract('certnet','org.certification-network.certnet');
 

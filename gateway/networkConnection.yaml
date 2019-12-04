@@ -83,7 +83,7 @@ organizations:
 
 orderers:
   orderer.certification-network.com:
-    url: grpcs://localhost:7050
+    url: grpc://localhost:7050
     grpcOptions:
       ssl-target-name-override: orderer.certification-network.com
     tlsCACerts:
@@ -91,42 +91,42 @@ orderers:
 
 peers:
   peer0.iit.certification-network.com:
-    url: grpcs://localhost:7051
+    url: grpc://localhost:7051
     grpcOptions:
       ssl-target-name-override: peer0.iit.certification-network.com
       request-timeout: 120001
     tlsCACerts:
       path: /home/yash/Hyperledger/certification-network/network/crypto-config/peerOrganizations/iit.certification-network.com/peers/peer0.iit.certification-network.com/msp/tlscacerts/tlsca.iit.certification-network.com-cert.pem
   peer1.iit.certification-network.com:
-    url: grpcs://localhost:8051
+    url: grpc://localhost:8051
     grpcOptions:
       ssl-target-name-override: peer1.iit.certification-network.com
       request-timeout: 120001
     tlsCACerts:
       path: /home/yash/Hyperledger/certification-network/network/crypto-config/peerOrganizations/iit.certification-network.com/peers/peer1.iit.certification-network.com/msp/tlscacerts/tlsca.iit.certification-network.com-cert.pem
   peer0.mhrd.certification-network.com:
-    url: grpcs://localhost:9053
+    url: grpc://localhost:9053
     grpcOptions:
       ssl-target-name-override: peer0.mhrd.certification-network.com
       request-timeout: 120001
     tlsCACerts:
       path: /home/yash/Hyperledger/certification-network/network/crypto-config/peerOrganizations/mhrd.certification-network.com/peers/peer0.mhrd.certification-network.com/msp/tlscacerts/tlsca.mhrd.certification-network.com-cert.pem
   peer1.mhrd.certification-network.com:
-    url: grpcs://localhost:10053
+    url: grpc://localhost:10053
     grpcOptions:
       ssl-target-name-override: peer1.mhrd.certification-network.com
       request-timeout: 120001
     tlsCACerts:
       path: /home/yash/Hyperledger/certification-network/network/crypto-config/peerOrganizations/mhrd.certification-network.com/peers/peer1.mhrd.certification-network.com/msp/tlscacerts/tlsca.mhrd.certification-network.com-cert.pem
   peer0.microsoft.certification-network.com:
-    url: grpcs://localhost:11053
+    url: grpc://localhost:11053
     grpcOptions:
       ssl-target-name-override: peer0.microsoft.certification-network.com
       request-timeout: 120001
     tlsCACerts:
       path: /home/yash/Hyperledger/certification-network/network/crypto-config/peerOrganizations/microsoft.certification-network.com/peers/peer0.microsoft.certification-network.com/msp/tlscacerts/tlsca.microsoft.certification-network.com-cert.pem
   peer1.microsoft.certification-network.com:
-    url: grpcs://localhost:12053
+    url: grpc://localhost:12053
     grpcOptions:
       ssl-target-name-override: peer1.microsoft.certification-network.com
       request-timeout: 120001
