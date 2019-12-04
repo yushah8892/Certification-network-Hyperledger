@@ -257,6 +257,7 @@ upgradeChaincode() {
   else
     set -x
     peer chaincode upgrade -o orderer.certification-network.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n edtech -l ${LANGUAGE} -v ${VERSION} -p ${CC_SRC_PATH} -c '{"Args":["org.certification-network.certnet:instantiate"]}' -P "OR ('iitMSP.member','mhrdMSP.member','microsoftMSP.member')" >&log.txt
+  
     res=$?
     set +x
   fi

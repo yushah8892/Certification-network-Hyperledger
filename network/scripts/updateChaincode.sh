@@ -36,12 +36,12 @@ echo "New Version : "$VERSION
 . scripts/utils.sh
 
 ## Install new version of chaincode on peer0 of all 3 orgs making them endorsers
-echo "Updating chaincode on peer0.iit.certification-network.com ..."
-installChaincode 0 'iit' $VERSION
-echo "Updating chaincode on peer0.mhrd.certification-network.com ..."
-installChaincode 0 'mhrd' $VERSION
-echo "Updating chaincode on peer0.microsoft.certification-network.com ..."
-installChaincode 0 'microsoft' $VERSION
+#echo "Updating chaincode on peer0.iit.certification-network.com ..."
+#installChaincode 0 'iit' $VERSION
+#echo "Updating chaincode on peer0.mhrd.certification-network.com ..."
+#installChaincode 0 'mhrd' $VERSION
+#echo "Updating chaincode on peer0.microsoft.certification-network.com ..."
+#installChaincode 0 'microsoft' $VERSION
 
 # Upgrade chaincode on the channel using peer0.iit
 echo "Upgrading chaincode on channel using peer0.iit.certification-network.com ..."

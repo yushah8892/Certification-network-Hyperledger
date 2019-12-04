@@ -28,7 +28,9 @@ class CertnetContract extends Contract {
 	async createStudent(ctx, studentId, name, email) {
 		// Create a new composite key for the new student account
 		const studentKey = ctx.stub.createCompositeKey('org.certification-network.certnet.student', [studentId]);
-		
+	
+
+
 		// Create a student object to be stored in blockchain
 		let newStudentObject = {
 			studentId: studentId,
