@@ -242,3 +242,28 @@ chaincodeInvoke() {
   echo "===================== Invoke transaction successful on $PEERS on channel '$CHANNEL_NAME' ===================== "
   echo
 }
+
+upgradeChaincode() {
+  PEER=$1
+  ORG=$2
+  setGlobals $PEER $ORG
+  VERSION=${3:-1.0}
+
+  if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+    set -x
+    peer chaincode upgrade -o orderer.certification-network.com:7050 -C $CHANNEL_NAME -n certnet -l ${LANGUAGE} -v ${VERSION} -p ${CC_SRC_PATH} -c '{"Args":["org.certification-network.certnet:instantiate"]}' -P "OR ('iitMSP.member','mhrdMSP.member','microsoftMSP.member')" >&log.txt
+    res=$?
+    set +x
+  else
+    set -x
+    peer chaincode upgrade -o orderer.certification-network.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n edtech -l ${LANGUAGE} -v ${VERSION} -p ${CC_SRC_PATH} -c '{"Args":["org.certification-network.certnet:instantiate"]}' -P "OR ('iitMSP.member','mhrdMSP.member','microsoftMSP.member')" >&log.txt
+    res=$?
+    set +x
+  fi
+  cat log.txt
+  verifyResult $res "Chaincode upgrade on peer${PEER}.${ORG} has failed"
+  echo "===================== Chaincode is upgraded on peer${PEER}.${ORG} on channel '$CHANNEL_NAME' ===================== "
+  echo
+}
+
+

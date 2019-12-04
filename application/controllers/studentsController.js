@@ -20,7 +20,7 @@ class StudentController {
             console.log(`Wallet path: ${walletPath}`);
 
             // Check to see if we've already enrolled the user.
-            const userExists = await wallet.exists('Admin@iit.certification-network.com');
+            const userExists = await wallet.exists('user1@iit.certification-network.com');
             if (!userExists) {
                 console.log('An identity for the user "user1" does not exist in the wallet');
                 console.log('Run the registerUser.js application before retrying');
@@ -29,7 +29,7 @@ class StudentController {
 
             // Create a new gateway for connecting to our peer node.
             const gateway = new Gateway();
-            await gateway.connect(ccpPath, { wallet, identity: 'Admin@iit.certification-network.com', discovery: { enabled: true, asLocalhost: true } });
+            await gateway.connect(ccpPath, { wallet, identity: 'user1@iit.certification-network.com', discovery: { enabled: true, asLocalhost: true } });
             console.log('Successfully connected to gateway.')
             // Get the network (channel) our contract is deployed to.
             const network = await gateway.getNetwork('certificationchannel'); 
@@ -40,7 +40,7 @@ class StudentController {
             // Evaluate the specified transaction.
             // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
             // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-            const result = await contract.evaluateTransaction('createStudent', studentId, name, email);
+            const result = await contract.submitTransaction('createStudent', studentId, name, email);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
             res.status(200).json({ response: result.toString() });
 
@@ -59,7 +59,7 @@ class StudentController {
             const walletPath = path.join(SETTING.APPL_ROOT_PATH, '/identity/iit');
             const wallet = new FileSystemWallet(walletPath);
             console.log(`Wallet path: ${walletPath}`);
-
+            console.log(req.params);
 
             // Check to see if we've already enrolled the user.
             const userExists = await wallet.exists('user1@iit.certification-network.com');
@@ -82,7 +82,7 @@ class StudentController {
             // Evaluate the specified transaction.
             // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
             // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-            const result = await contract.evaluateTransaction('getStudent', req.params.student_id);
+            const result = await contract.evaluateTransaction('getStudent', req.params.id);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
             res.status(200).json({ response: result.toString() });
 

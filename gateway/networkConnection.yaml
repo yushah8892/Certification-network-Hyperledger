@@ -91,14 +91,14 @@ orderers:
 
 peers:
   peer0.iit.certification-network.com:
-    url: grpcs://172.29.0.15:7051
+    url: grpcs://localhost:7051
     grpcOptions:
       ssl-target-name-override: peer0.iit.certification-network.com
       request-timeout: 120001
     tlsCACerts:
       path: /home/yash/Hyperledger/certification-network/network/crypto-config/peerOrganizations/iit.certification-network.com/peers/peer0.iit.certification-network.com/msp/tlscacerts/tlsca.iit.certification-network.com-cert.pem
   peer1.iit.certification-network.com:
-    url: grpcs://172.29.0.16:8051
+    url: grpcs://localhost:8051
     grpcOptions:
       ssl-target-name-override: peer1.iit.certification-network.com
       request-timeout: 120001

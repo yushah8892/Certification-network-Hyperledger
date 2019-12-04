@@ -335,7 +335,7 @@ CLI_DELAY=5
 # channel name defaults to "certificationchannel"
 CHANNEL_NAME="certificationchannel"
 # version for updating chaincode
-VERSION_NO=1.1
+VERSION_NO=1.2
 # type of chaincode to be installed
 TYPE="basic"
 # use this as the default docker-compose yaml definition

@@ -54,12 +54,17 @@ class CertnetContract extends Contract {
 	 */
 	async getStudent(ctx, studentId) {
 		// Create the composite key required to fetch record from blockchain
+		console.log('student:',studentId);
 		const studentKey = ctx.stub.createCompositeKey('org.certification-network.certnet.student', [studentId]);
-		
+		console.log('studentKey:',studentKey);
+
 		// Return value of student account from blockchain
 		let studentBuffer = await ctx.stub
 				.getState(studentKey)
 				.catch(err => console.log(err));
+		if(!studentBuffer || studentBuffer.length ==0){
+			throw new Error(`Student with id as:${studentId} does not exist`);
+		}
 		return JSON.parse(studentBuffer.toString());
 	}
 	

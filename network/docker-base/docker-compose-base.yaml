@@ -7,7 +7,7 @@ services:
     container_name: orderer.certification-network.com
     image: hyperledger/fabric-orderer:latest
     environment:
-      - FABRIC_LOGGING_SPEC=INFO
+      - FABRIC_LOGGING_SPEC=DEBUG
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -43,7 +43,7 @@ services:
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.iit.certification-network.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.iit.certification-network.com:7051
       - CORE_PEER_LOCALMSPID=iitMSP
-      - FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
 
     volumes:
         - /var/run/:/host/var/run/
