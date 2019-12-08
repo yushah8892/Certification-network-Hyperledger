@@ -1,22 +1,22 @@
 'use strict';
 
-const {Contract} = require('fabric-contract-api');
+const { Contract } = require('fabric-contract-api');
 
 class CertnetContract extends Contract {
-	
+
 	constructor() {
 		// Provide a custom name to refer to this smart contract
 		super('org.certification-network.certnet');
 	}
-	
+
 	/* ****** All custom functions are defined below ***** */
-	
+
 	// This is a basic user defined function used at the time of instantiating the smart contract
 	// to print the success message on console
 	async instantiate(ctx) {
 		console.log('Certnet Smart Contract Instantiated');
 	}
-	
+
 	/**
 	 * Create a new student account on the network
 	 * @param ctx - The transaction context object
@@ -28,7 +28,7 @@ class CertnetContract extends Contract {
 	async createStudent(ctx, studentId, name, email) {
 		// Create a new composite key for the new student account
 		const studentKey = ctx.stub.createCompositeKey('org.certification-network.certnet.student', [studentId]);
-	
+
 
 
 		// Create a student object to be stored in blockchain
@@ -40,7 +40,7 @@ class CertnetContract extends Contract {
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		};
-		
+
 		// Convert the JSON object to a buffer and send it to blockchain for storage
 		let dataBuffer = Buffer.from(JSON.stringify(newStudentObject));
 		await ctx.stub.putState(studentKey, dataBuffer);
@@ -49,7 +49,7 @@ class CertnetContract extends Contract {
 		// Return value of new student account created to user
 		return newStudentObject;
 	}
-	
+
 	/**
 	 * Get a student account's details from the blockchain
 	 * @param ctx - The transaction context
@@ -58,21 +58,21 @@ class CertnetContract extends Contract {
 	 */
 	async getStudent(ctx, studentId) {
 		// Create the composite key required to fetch record from blockchain
-		console.log('student:',studentId);
+		console.log('student:', studentId);
 		const studentKey = ctx.stub.createCompositeKey('org.certification-network.certnet.student', [studentId]);
-		console.log('studentKey:',studentKey);
+		console.log('studentKey:', studentKey);
 
 		// Return value of student account from blockchain
 		let studentBuffer = await ctx.stub
-				.getState(studentKey)
-				.catch(err => console.log(err));
-		if(!studentBuffer || studentBuffer.length ==0){
+			.getState(studentKey)
+			.catch(err => console.log(err));
+		if (!studentBuffer || studentBuffer.length == 0) {
 			throw new Error(`Student with id as:${studentId} does not exist`);
 		}
-		
+
 		return JSON.parse(studentBuffer.toString());
 	}
-	
+
 	/**
 	 * Issue a certificate to the student after completing the course
 	 * @param ctx
@@ -84,19 +84,19 @@ class CertnetContract extends Contract {
 	 */
 	async issueCertificate(ctx, studentId, courseId, gradeReceived, originalHash) {
 		let msgSender = ctx.clientIdentity.getID();
-		let certificateKey = ctx.stub.createCompositeKey('org.certification-network.certnet.certificate',[courseId + '-' + studentId]);
+		let certificateKey = ctx.stub.createCompositeKey('org.certification-network.certnet.certificate', [courseId + '-' + studentId]);
 		let studentKey = ctx.stub.createCompositeKey('org.certification-network.certnet.student', [studentId]);
-		
+
 		// Fetch student with given ID from blockchain
 		let student = await ctx.stub
-				.getState(studentKey)
-				.catch(err => console.log(err));
-		
+			.getState(studentKey)
+			.catch(err => console.log(err));
+
 		// Fetch certificate with given ID from blockchain
 		let certificate = await ctx.stub
-				.getState(certificateKey)
-				.catch(err => console.log(err));
-		
+			.getState(certificateKey)
+			.catch(err => console.log(err));
+
 		// Make sure that student already exists and certificate with given ID does not exist.
 		if (student.length === 0 || certificate.length !== 0) {
 			throw new Error('Invalid Student ID: ' + studentId + ' or Course ID: ' + courseId + '. Either student does not exist or certificate already exists.');
@@ -118,7 +118,7 @@ class CertnetContract extends Contract {
 			return certificateObject;
 		}
 	}
-	
+
 	/**
 	 *
 	 * @param ctx
@@ -130,15 +130,15 @@ class CertnetContract extends Contract {
 	async verifyCertificate(ctx, studentId, courseId, currentHash) {
 		let verifier = ctx.clientIdentity.getID();
 		let certificateKey = ctx.stub.createCompositeKey('org.certification-network.certnet.certificate', [courseId + '-' + studentId]);
-		
+
 		// Fetch certificate with given ID from blockchain
 		let certificateBuffer = await ctx.stub
-				.getState(certificateKey)
-				.catch(err => console.log(err));
-		
+			.getState(certificateKey)
+			.catch(err => console.log(err));
+
 		// Convert the received certificate buffer to a JSON object
 		const certificate = JSON.parse(certificateBuffer.toString());
-		
+
 		// Check if original certificate hash matches the current hash provided for certificate
 		if (certificate === undefined || certificate.originalHash !== currentHash) {
 			// Certificate is not valid, issue event notifying the student application
@@ -164,7 +164,7 @@ class CertnetContract extends Contract {
 			return verificationResult;
 		}
 	}
-	
+
 }
 
 module.exports = CertnetContract;

@@ -1,19 +1,19 @@
 // Setting for Hyperledger Fabric
 const { FileSystemWallet, Gateway } = require('fabric-network');
 const path = require('path');
-const SETTING  = require('../../setting');
+const SETTING = require('../../setting');
 const yaml = require('js-yaml');
 const fs = require('fs');
-const ccpPath = yaml.safeLoad(fs.readFileSync(path.resolve(SETTING.APPL_ROOT_PATH,  'gateway/networkConnection.yaml'), 'utf8'));
+const ccpPath = yaml.safeLoad(fs.readFileSync(path.resolve(SETTING.APPL_ROOT_PATH, 'gateway/networkConnection.yaml'), 'utf8'));
 const gateway = new Gateway();
 
 class StudentController {
 
 
-    static async getNetwork(){
-        try{
+    static async getNetwork() {
+        try {
             // Create a new file system based wallet for managing identities.
-            const walletPath = path.join(SETTING.APPL_ROOT_PATH ,'/identity/iit');
+            const walletPath = path.join(SETTING.APPL_ROOT_PATH, '/identity/iit');
             const wallet = new FileSystemWallet(walletPath);
             console.log(`Wallet path: ${walletPath}`);
 
@@ -29,38 +29,38 @@ class StudentController {
             await gateway.connect(ccpPath, { wallet, identity: 'user1@iit.certification-network.com', discovery: { enabled: true, asLocalhost: true } });
             console.log('Successfully connected to gateway.')
             // Get the network (channel) our contract is deployed to.
-            const network = await gateway.getNetwork('certificationchannel'); 
+            const network = await gateway.getNetwork('certificationchannel');
             console.log('successfully get the network.');
             return network;
-        }catch(error){
+        } catch (error) {
 
             console.error(`Failed to evaluate transaction: ${error}`);
             res.status(500).json({ error: error });
-            
+
             //process.exit(1);
 
         }
     }
     static async createStudents(req, res) {
-        const {studentId,name,email}= req.body;
+        const { studentId, name, email } = req.body;
         //console.log(studentId);
-       
+
         try {
 
             const network = await this.getNetwork();
             // Get the contract from the network.
-            const contract = network.getContract('certnet','org.certification-network.certnet');
+            const contract = network.getContract('certnet', 'org.certification-network.certnet');
 
 
             await contract.addContractListener('createStudent', 'createStudent', (err, event, blkNum, txid, status, options) => {
-                console.log('event received', status, event, blkNum, txid);  
+                console.log('event received', status, event, blkNum, txid);
                 if (err) {
-                   this.emit('error', err);
+                    this.emit('error', err);
                 } else if (status && status === 'VALID') {
-                   console.log("payload ",event.payload.toString());
+                    console.log("payload ", event.payload.toString());
                 }
             });
-            
+
             const result = await contract.submitTransaction('createStudent', studentId, name, email);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
             await gateway.disconnect();
@@ -71,9 +71,9 @@ class StudentController {
             console.error(`Failed to evaluate transaction: ${error}`);
             res.status(500).json({ error: error });
 
-           // process.exit(1);
+            // process.exit(1);
         }
-        
+
     }
 
     static async getStudent(req, res) {
@@ -81,7 +81,7 @@ class StudentController {
         try {
             const network = await this.getNetwork();
             // Get the contract from the network.
-            const contract = network.getContract('certnet','org.certification-network.certnet');
+            const contract = network.getContract('certnet', 'org.certification-network.certnet');
 
             const result = await contract.evaluateTransaction('getStudent', req.params.id);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
@@ -94,7 +94,7 @@ class StudentController {
             console.error(`Failed to evaluate transaction: ${error}`);
             res.status(500).json({ error: error });
 
-           // process.exit(1);
+            // process.exit(1);
         }
     }
 
