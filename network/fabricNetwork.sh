@@ -139,7 +139,7 @@ function networkUp() {
   # Wait for 10 seconds to allow the docker network to stabilise
   sleep 1
   echo "Sleeping 50s to allow cluster to complete booting"
-  sleep 50
+  sleep 10
 
   # now run the bootstrap script
   docker exec cli scripts/bootstrap.sh "$CHANNEL_NAME" "$CLI_DELAY" "$LANGUAGE" "$CLI_TIMEOUT" "$VERBOSE"

@@ -5,6 +5,7 @@ const SETTING  = require('../../setting');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const ccpPath = yaml.safeLoad(fs.readFileSync(path.resolve(SETTING.APPL_ROOT_PATH,  'gateway/networkConnection.yaml'), 'utf8'));
+const gateway = new Gateway();
 
 class StudentController {
 
@@ -25,7 +26,6 @@ class StudentController {
             }
 
             // Create a new gateway for connecting to our peer node.
-            const gateway = new Gateway();
             await gateway.connect(ccpPath, { wallet, identity: 'user1@iit.certification-network.com', discovery: { enabled: true, asLocalhost: true } });
             console.log('Successfully connected to gateway.')
             // Get the network (channel) our contract is deployed to.
@@ -36,7 +36,8 @@ class StudentController {
 
             console.error(`Failed to evaluate transaction: ${error}`);
             res.status(500).json({ error: error });
-            process.exit(1);
+            
+            //process.exit(1);
 
         }
     }
@@ -50,19 +51,27 @@ class StudentController {
             // Get the contract from the network.
             const contract = network.getContract('certnet','org.certification-network.certnet');
 
-            // Evaluate the specified transaction.
-            // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-            // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
 
-
+            await contract.addContractListener('createStudent', 'createStudent', (err, event, blkNum, txid, status, options) => {
+                console.log('event received', status, event, blkNum, txid);  
+                if (err) {
+                   this.emit('error', err);
+                } else if (status && status === 'VALID') {
+                   console.log("payload ",event.payload.toString());
+                }
+            });
+            
             const result = await contract.submitTransaction('createStudent', studentId, name, email);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+            await gateway.disconnect();
             res.status(200).json({ response: result.toString() });
+
 
         } catch (error) {
             console.error(`Failed to evaluate transaction: ${error}`);
             res.status(500).json({ error: error });
-            process.exit(1);
+
+           // process.exit(1);
         }
         
     }
@@ -74,17 +83,18 @@ class StudentController {
             // Get the contract from the network.
             const contract = network.getContract('certnet','org.certification-network.certnet');
 
-            // Evaluate the specified transaction.
-            // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-            // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
             const result = await contract.evaluateTransaction('getStudent', req.params.id);
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+            await gateway.disconnect();
+
             res.status(200).json({ response: result.toString() });
+
 
         } catch (error) {
             console.error(`Failed to evaluate transaction: ${error}`);
             res.status(500).json({ error: error });
-            process.exit(1);
+
+           // process.exit(1);
         }
     }
 

@@ -1,0 +1,42 @@
+CORE_PEER_LOCALMSPID="iitMSP"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/iit.certification-network.com/users/Admin\@iit.certification-network.com/msp/
+CORE_PEER_ADDRESS=peer0.iit.certification-network.com:7051
+
+peer chaincode install -n certnet -v 1.1 -l node -p /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/
+
+peer chaincode list --installed
+
+CORE_PEER_LOCALMSPID="mhrdMSP"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/mhrd.certification-network.com/users/Admin\@mhrd.certification-network.com/msp/
+CORE_PEER_ADDRESS=peer0.mhrd.certification-network.com:9051
+
+
+
+peer chaincode install -n certnet -v 1.1 -l node -p /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/
+
+peer chaincode list --installed
+
+
+
+CORE_PEER_LOCALMSPID="microsoftMSP"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/microsoft.certification-network.com/users/Admin\@microsoft.certification-network.com/msp/
+CORE_PEER_ADDRESS=peer0.microsoft.certification-network.com:11051
+
+
+
+peer chaincode install -n certnet -v 1.1 -l node -p /opt/gopath/src/github.com/hyperledger/fabric/peer/chaincode/
+
+peer chaincode list --installed
+
+CORE_PEER_LOCALMSPID="iitMSP"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/iit.certification-network.com/users/Admin\@iit.certification-network.com/msp/
+CORE_PEER_ADDRESS=peer0.iit.certification-network.com:7051
+
+peer chaincode instantiate -o orderer.certification-network.com:7050 -C certificationchannel -n certnet -l node -v 1.1 -c '{"Args":["org.certification-network.certnet:instantiate"]}' -P "OR
+('iitMSP.member','mhrdMSP.member','microsoftMSP.member')"
+
+
+
+
+
+

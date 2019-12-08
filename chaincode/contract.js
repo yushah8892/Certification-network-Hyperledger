@@ -44,6 +44,8 @@ class CertnetContract extends Contract {
 		// Convert the JSON object to a buffer and send it to blockchain for storage
 		let dataBuffer = Buffer.from(JSON.stringify(newStudentObject));
 		await ctx.stub.putState(studentKey, dataBuffer);
+		ctx.stub.setEvent('createStudent', Buffer.from(JSON.stringify(newStudentObject)));
+
 		// Return value of new student account created to user
 		return newStudentObject;
 	}
@@ -67,6 +69,7 @@ class CertnetContract extends Contract {
 		if(!studentBuffer || studentBuffer.length ==0){
 			throw new Error(`Student with id as:${studentId} does not exist`);
 		}
+		
 		return JSON.parse(studentBuffer.toString());
 	}
 	
