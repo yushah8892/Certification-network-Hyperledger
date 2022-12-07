@@ -4,7 +4,7 @@
     "description": "API Testing",
     "author": "Yash Shah",
     "dependencies": {
-        "body-parser": "^1.17.1",
+        "body-parser": "^1.20.1",
         "chai": "^3.5.0",
         "mocha": "^3.2.0",
         "mocha-jenkins-reporter": "^0.3.7",
